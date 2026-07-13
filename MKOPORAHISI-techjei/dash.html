@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loan Dashboard | Okoacash<</title>
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="192x192" href="icons/icon.192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon.512.png" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* ===== CSS Variables ===== */
+    :root {
+      --primary: #00A859;
+      --primary-dark: #008244;
+      --secondary: #EE3124;
+      --accent: #FFC000;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --background: #f8fafc;
+      --card-bg: #ffffff;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --radius: 12px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #8ce9e9 0%, #e2e8f0 100%);
+      color: var(--text);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      flex: 1;
+    }
+
+    /* ===== Header Styles ===== */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .help-link {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 150px;
+      height: 150px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      bottom: -30%;
+      right: 10%;
+      width: 100px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== Card Styles ===== */
+    .card {
+      background-color: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(37, 99, 235, 0.1);
+      color: var(--primary);
+      border-radius: 6px;
+    }
+
+    /* ===== Status Badge ===== */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: rgba(16, 185, 129, 0.1);
+      color: var(--secondary);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    /* ===== Loan Details ===== */
+    .loan-details {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .detail-item {
+      background: rgba(241, 245, 249, 0.7);
+      border-radius: var(--radius);
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .detail-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .detail-value {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .loan-amount {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* ===== Trust Badges ===== */
+    .trust-badges {
+      display: flex;
+      justify-content: space-between;
+      margin: 1.5rem 0;
+      gap: 0.5rem;
+    }
+
+    .trust-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .trust-icon {
+      width: 32px;
+      height: 32px;
+      background-color: rgba(37, 99, 235, 0.1);
+      color: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .trust-text {
+      font-size: 0.7rem;
+      color: var(--text-light);
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    /* ===== Button Styles ===== */
+    .btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      margin-bottom: 1rem;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    /* ===== Footer Styles ===== */
+    .footer {
+      background-color: var(--primary-dark);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .footer p {
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
+    /* ===== Loading Spinner ===== */
+    .spinner {
+      display: none;
+      width: 40px;
+      height: 40px;
+      margin: 20px auto;
+      border: 4px solid rgba(37, 99, 235, 0.1);
+      border-radius: 50%;
+      border-top: 4px solid var(--primary);
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ===== Media Queries ===== */
+    @media (min-width: 768px) {
+      .container {
+        max-width: 520px;
+        padding: 2rem;
+      }
+
+      .hero h1 {
+        font-size: 1.75rem;
+      }
+
+      .card {
+        padding: 1.75rem;
+      }
+
+      .trust-badges {
+        gap: 1rem;
+      }
+
+      .trust-text {
+        font-size: 0.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .trust-text {
+        font-size: 0.65rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <div class="logo-icon">P</div>
+        <div class="logo-text">OKOACASH</div>
+      </div>
+      <a href="#" class="help-link">
+        <span>Help</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <h1 id="welcome-title">Welcome</h1>
+      <p>Your loan application dashboard</p>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="spinner" id="loading-spinner"></div>
+
+    <!-- Dashboard Content -->
+    <div id="dashboard-content" style="display:none;">
+      <!-- Loan Status Card -->
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          Loan Application Status
+        </div>
+
+        <div class="status-badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          Approved
+        </div>
+
+        <div class="loan-details">
+          <div class="detail-item">
+            <div class="detail-label">Loan Amount</div>
+            <div class="detail-value loan-amount" id="loan-amount">Ksh 0</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Processing Fee</div>
+            <div class="detail-value" id="processing-fee">Ksh 0</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Repayment Amount</div>
+            <div class="detail-value" id="repayment-amount">Ksh 0</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Disbursement Time</div>
+            <div class="detail-value">Within 48 hours</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Due Date</div>
+            <div class="detail-value" id="due-date">--/--/----</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Reference Number</div>
+            <div class="detail-value">PCR-<span id="ref-number">XXXXXX</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="trust-badges">
+        <div class="trust-badge">
+          <div class="trust-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <div class="trust-text">Secure</div>
+        </div>
+        <div class="trust-badge">
+          <div class="trust-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <div class="trust-text">Licensed</div>
+        </div>
+        <div class="trust-badge">
+          <div class="trust-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 16v-4"></path>
+              <path d="M12 8h.01"></path>
+            </svg>
+          </div>
+          <div class="trust-text">Support</div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <button class="btn-primary" id="apply-again-btn">
+        <span>Apply for Another Loan</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+
+      <button class="btn-primary" id="logout-btn">
+        <span>Logout</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="/contact">Contact</a>
+    </div>
+    <p>&copy; 2025 OKOACASH. Licensed by CBK.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const spinner = document.getElementById('loading-spinner');
+      const content = document.getElementById('dashboard-content');
+      const logoutBtn = document.getElementById('logout-btn');
+      const applyAgainBtn = document.getElementById('apply-again-btn');
+
+      function showLoading() { spinner.style.display = 'block'; }
+      function hideLoading() { spinner.style.display = 'none'; }
+
+      function generateRefNumber() {
+        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let result = '';
+        for (let i = 0; i < 7; i++) {
+          result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+      }
+
+      function formatDate(date) {
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+
+      function loadLoanData() {
+        const loanData = JSON.parse(sessionStorage.getItem('myLoan') || '{}');
+        const userData = JSON.parse(sessionStorage.getItem('userData') || '{}');
+
+        if (userData.name) {
+          document.getElementById('welcome-title').textContent = `Hi ${userData.name}`;
+        }
+
+        if (loanData.loan_amount) {
+          document.getElementById('loan-amount').textContent = `Ksh ${parseInt(loanData.loan_amount).toLocaleString()}`;
+          document.getElementById('processing-fee').textContent = `Ksh ${loanData.processing_fee || 0}`;
+          const repayment = parseInt(loanData.loan_amount) * 1.1;
+          document.getElementById('repayment-amount').textContent = `Ksh ${repayment.toLocaleString()}`;
+          const dueDate = new Date();
+          dueDate.setMonth(dueDate.getMonth() + 2);
+          document.getElementById('due-date').textContent = formatDate(dueDate);
+          document.getElementById('ref-number').textContent = generateRefNumber();
+        } else {
+          window.location.href = '/eligibility';
+        }
+      }
+
+      // Show loading initially
+      showLoading();
+      setTimeout(() => {
+        hideLoading();
+        content.style.display = 'block';
+        loadLoanData();
+      }, 2000);
+
+      // Logout functionality
+      logoutBtn.addEventListener('click', function () {
+        showLoading();
+        setTimeout(() => {
+          sessionStorage.removeItem('myLoan');
+          sessionStorage.removeItem('userData');
+          window.location.href = '/';
+        }, 1000);
+      });
+
+      // Apply again functionality
+      applyAgainBtn.addEventListener('click', function () {
+        showLoading();
+        setTimeout(() => {
+          window.location.href = '/eligibility';
+        }, 1000);
+      });
+
+      // Anti-decompilation and security measures
+      (function () {
+        // Disable right-click
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Disable DevTools shortcuts
+        document.onkeydown = function (e) {
+          if (e.keyCode == 123) { return false; } // F12
+          if (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0))) {
+            return false;
+          }
+          if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } // Ctrl+U
+        };
+
+        setInterval(function () {
+          var before = new Date().getTime();
+          debugger;
+          var after = new Date().getTime();
+          if (after - before > 100) {
+            document.body.innerHTML = "<div style='text-align:center; padding: 2rem;'><strong>Security violation detected.</strong> Please close developer tools to use this application.</div>";
+          }
+        }, 1000);
+      })();
+    });
+  </script>
+</body>
+
+</html>
