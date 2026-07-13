@@ -25,15 +25,28 @@ async function getAccessToken(consumerKey, consumerSecret, baseUrl) {
         method: 'POST',
         headers: {
             Authorization: `Basic ${credentials}`,
+            'Content-Type': 'application/json',
         },
     });
 
-    if (!response.ok) {
-        const errText = await response.text();
-        throw new Error(`OAuth failed (${response.status}): ${errText}`);
+    const text = await response.text();
+    console.log('OAuth response status:', response.status, 'body:', text);
+
+    if (!response.ok || !text) {
+        throw new Error(`OAuth failed (${response.status}): ${text || 'Empty response'}`);
     }
 
-    const data = await response.json();
+    let data;
+    try {
+        data = JSON.parse(text);
+    } catch (e) {
+        throw new Error(`OAuth returned non-JSON: ${text.substring(0, 200)}`);
+    }
+
+    if (!data.access_token) {
+        throw new Error(`OAuth response missing access_token: ${JSON.stringify(data)}`);
+    }
+
     return data.access_token;
 }
 
@@ -114,9 +127,15 @@ export default async function handler(req, res) {
             body: JSON.stringify(queryPayload),
         });
 
-        const result = await response.json();
+        const queryText = await response.text();
+        console.log('Daraja STK Query response:', response.status, queryText);
 
-        console.log('Daraja STK Query response:', JSON.stringify(result));
+        let result;
+        try {
+            result = JSON.parse(queryText);
+        } catch (e) {
+            throw new Error(`STK Query returned non-JSON (${response.status}): ${queryText.substring(0, 200)}`);
+        }
 
         // Daraja ResultCode "0" = success, "1032" = user cancelled, "1037" = timeout
         const resultCode = String(result.ResultCode || '');
