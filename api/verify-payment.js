@@ -22,10 +22,9 @@ async function getAccessToken(consumerKey, consumerSecret, baseUrl) {
     const credentials = Buffer.from(`${consumerKey}:${consumerSecret}`).toString('base64');
 
     const response = await fetch(`${baseUrl}/oauth/v1/generate?grant_type=client_credentials`, {
-        method: 'POST',
+        method: 'GET',
         headers: {
             Authorization: `Basic ${credentials}`,
-            'Content-Type': 'application/json',
         },
     });
 
