@@ -2,10 +2,10 @@
 // Uses /mpesa/stkpushquery/v1/query to check the status of an STK Push request
 //
 // Environment Variables Required:
-//   DARAJA_CONSUMER_KEY    - Safaricom Daraja consumer key
-//   DARAJA_CONSUMER_SECRET - Safaricom Daraja consumer secret
-//   DARAJA_SHORTCODE_PAYBILL  - Business Paybill shortcode (used for password generation)
-//   DARAJA_PASSKEY_PAYBILL    - Lipa Na M-Pesa Online passkey (paybill)
+//   DARAJA_CONSUMER_KEY       - Safaricom Daraja consumer key
+//   DARAJA_CONSUMER_SECRET    - Safaricom Daraja consumer secret
+//   DARAJA_SHORTCODE_BUYGOODS - Till number (used for Buy Goods query)
+//   DARAJA_PASSKEY             - LNM Passkey (single passkey for both types)
 //   DARAJA_ENV                - "sandbox" or "production" (default: sandbox)
 
 const DARAJA_BASE_URLS = {
@@ -94,7 +94,7 @@ export default async function handler(req, res) {
         const consumerKey = process.env.DARAJA_CONSUMER_KEY;
         const consumerSecret = process.env.DARAJA_CONSUMER_SECRET;
         const businessShortCode = process.env.DARAJA_SHORTCODE_PAYBILL;
-        const passkey = process.env.DARAJA_PASSKEY_PAYBILL;
+        const passkey = process.env.DARAJA_PASSKEY;
         const envKey = process.env.DARAJA_ENV || 'sandbox';
 
         if (!consumerKey || !consumerSecret) {

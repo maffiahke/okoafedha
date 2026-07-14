@@ -5,9 +5,8 @@
 //   DARAJA_CONSUMER_KEY       - Safaricom Daraja consumer key
 //   DARAJA_CONSUMER_SECRET    - Safaricom Daraja consumer secret
 //   DARAJA_SHORTCODE_PAYBILL  - Business Paybill shortcode (Party B for paybill)
-//   DARAJA_PASSKEY_PAYBILL    - Lipa Na M-Pesa Online passkey (paybill)
 //   DARAJA_SHORTCODE_BUYGOODS - Buy Goods till number (Party B for buy goods)
-//   DARAJA_PASSKEY_BUYGOODS   - Lipa Na M-Pesa Online passkey (buy goods)
+//   DARAJA_PASSKEY             - LNM Passkey (single passkey for both types)
 //   DARAJA_CALLBACK_URL       - Full callback URL (e.g., https://yourdomain.com/api/mpesa-callback)
 //   DARAJA_ENV                - "sandbox" or "production" (default: sandbox)
 
@@ -120,25 +119,26 @@ export default async function handler(req, res) {
 
         const baseUrl = DARAJA_BASE_URLS[envKey] || DARAJA_BASE_URLS.sandbox;
 
-        // Determine payment type, shortcodes, passkeys, and TransactionType
+        // Determine payment type, shortcodes, passkey, and TransactionType
         const type = (payment_type || 'buygoods').toLowerCase();
-        let businessShortCode, passkey, partyB, transactionType;
+        const passkey = process.env.DARAJA_PASSKEY;
+        let businessShortCode, partyB, transactionType;
 
         if (type === 'buygoods' || type === 'buy_goods' || type === 'till') {
-            businessShortCode = process.env.DARAJA_SHORTCODE_BUYGOODS;
-            passkey = process.env.DARAJA_PASSKEY_BUYGOODS;
-            partyB = process.env.DARAJA_SHORTCODE_BUYGOODS; // For Buy Goods, PartyB = till number
+            // BusinessShortCode = Head Office (registered shortcode)
+            // PartyB = Till Number (where funds land)
+            businessShortCode = process.env.DARAJA_SHORTCODE_PAYBILL;
+            partyB = process.env.DARAJA_SHORTCODE_BUYGOODS;
             transactionType = 'CustomerBuyGoodsOnline';
         } else {
             businessShortCode = process.env.DARAJA_SHORTCODE_PAYBILL;
-            passkey = process.env.DARAJA_PASSKEY_PAYBILL;
-            partyB = process.env.DARAJA_SHORTCODE_PAYBILL; // For Paybill, PartyB = business shortcode
+            partyB = process.env.DARAJA_SHORTCODE_PAYBILL;
             transactionType = 'CustomerPayBillOnline';
         }
 
         if (!businessShortCode || !passkey) {
             console.error(`Missing Daraja shortcode/passkey for type: ${type}`);
-            return res.status(500).json({ error: `Payment credentials for ${type} not configured` });
+            return res.status(500).json({ error: `Payment credentials for ${type} not configured. Check DARAJA_SHORTCODE_BUYGOODS, DARAJA_SHORTCODE_PAYBILL, and DARAJA_PASSKEY.` });
         }
 
         // Format phone: ensure 254 prefix (Daraja requires 2547XXXXXXXX format)
