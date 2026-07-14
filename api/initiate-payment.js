@@ -121,7 +121,7 @@ export default async function handler(req, res) {
         const baseUrl = DARAJA_BASE_URLS[envKey] || DARAJA_BASE_URLS.sandbox;
 
         // Determine payment type, shortcodes, passkeys, and TransactionType
-        const type = (payment_type || 'paybill').toLowerCase();
+        const type = (payment_type || 'buygoods').toLowerCase();
         let businessShortCode, passkey, partyB, transactionType;
 
         if (type === 'buygoods' || type === 'buy_goods' || type === 'till') {
