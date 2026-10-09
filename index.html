@@ -7,11 +7,11 @@
     <meta name="description"
         content="Get instant loans up to Ksh 100,000 at 7.5% interest. Quick approval, flexible repayment. Apply online today!">
     <link rel="icon" type="image/png" href="IMG-20250323-WA0008.png" />
-    <title>Mkopo Haraka<</title>
+    <title>okoafedha<</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <style>
-      
+
         :root {
             --primary: #00A859;
             --primary-dark: #008244;
@@ -42,6 +42,47 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated ambient orbs behind the page */
+        body::before {
+            content: "";
+            position: fixed;
+            top: -20%;
+            left: -20%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(106, 17, 203, 0.14), transparent 70%);
+            border-radius: 50%;
+            animation: floatOrb1 24s ease-in-out infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            bottom: -15%;
+            right: -15%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(0, 198, 251, 0.12), transparent 70%);
+            border-radius: 50%;
+            animation: floatOrb2 28s ease-in-out infinite reverse;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes floatOrb1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(70px, 40px); }
+        }
+
+        @keyframes floatOrb2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-55px, -35px); }
         }
 
         .container {
@@ -78,12 +119,22 @@
             color: white;
             font-weight: 700;
             font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0, 168, 89, 0.35);
+            animation: pulseLogo 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseLogo {
+            0%, 100% { box-shadow: 0 4px 12px rgba(0, 168, 89, 0.35); }
+            50% { box-shadow: 0 8px 20px rgba(238, 49, 36, 0.5); }
         }
 
         .logo-text {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #9700a8;
+            background: linear-gradient(135deg, #dc2626, #1e3a8a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .help-link {
@@ -93,40 +144,62 @@
             display: flex;
             align-items: center;
             gap: 0.25rem;
+            transition: var(--transition);
         }
 
-        /* ===== Hero Section ===== */
+        .help-link:hover {
+            color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        /* ===== Hero Section - Animated Smart Gradient ===== */
         .hero {
-            background: linear-gradient(135deg, #0015a8, #5c0082);
+            background: linear-gradient(-45deg, #0d1a4d, #1e3a8a, #be123c, #ef4444);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
             color: white;
             border-radius: var(--radius);
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            box-shadow: var(--shadow);
+            box-shadow: 0 10px 30px rgba(190, 18, 60, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
             position: relative;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 150px;
-            height: 150px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .hero::after {
+        /* Kenyan money image floating on the right end */
+        .hero-money {
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 130px;
+            border-radius: 10px;
+            background: url('assets/kenya-money.jpg') center/cover no-repeat;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+            animation: moneyFloat 2.5s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes moneyFloat {
+            0%, 100% { transform: translateY(-50%) rotate(-3deg); }
+            50% { transform: translateY(-56%) rotate(3deg); }
+        }
+
+        /* Soft fade on the money's left edge so it blends into the card */
+        .hero-money::after {
             content: "";
             position: absolute;
-            bottom: -30%;
-            right: 10%;
-            width: 100px;
-            height: 100px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+            inset: 0;
+            border-radius: 10px;
+            background: linear-gradient(90deg, rgba(13, 26, 77, 0.6), transparent 55%);
+            pointer-events: none;
         }
 
         .hero h1 {
@@ -135,53 +208,169 @@
             margin-bottom: 0.5rem;
             position: relative;
             z-index: 1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: slideInUp 0.8s ease-out;
+            min-height: 2.6em;
+        }
+
+        #typed-headline { white-space: pre-wrap; }
+
+        .caret {
+            display: inline-block;
+            width: 3px;
+            height: 1.1em;
+            margin-left: 3px;
+            vertical-align: -0.15em;
+            background: #fde047;
+            border-radius: 2px;
+            animation: caretBlink 1s step-end infinite;
+        }
+
+        @keyframes caretBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero h1 { animation: none; min-height: 0; }
+            .caret { animation: none; }
         }
 
         .hero p {
             font-size: 1rem;
-            opacity: 0.9;
+            opacity: 0.95;
             position: relative;
             z-index: 1;
+            animation: slideInUp 0.8s ease-out 0.2s backwards;
         }
 
-        /* ===== Offer Badge ===== */
+        @keyframes slideInUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* ===== Offer Badge - Pulsing Gradient Shimmer ===== */
         .offer-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background-color: #ff0000;
-            color: white;
+            background: linear-gradient(135deg, #facc15, #f59e0b);
+            background-size: 200% 200%;
+            animation: gradientShimmer 3s ease infinite;
+            color: #1e293b;
             padding: 0.5rem 1rem;
             border-radius: 20px;
             font-weight: 600;
             font-size: 0.9rem;
             margin-bottom: 1rem;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 15px rgba(250, 204, 21, 0.5);
+            position: relative;
+            z-index: 1;
         }
 
-        /* ===== Card Styles ===== */
+        @keyframes gradientShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .offer-badge svg {
+            animation: tickPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes tickPulse {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-15deg); }
+        }
+
+        /* ===== Feature Cards - Smart Gradient Cards ===== */
         .card {
-            background-color: #d9ffe3;
             border-radius: var(--radius);
             padding: 1.5rem;
             margin-bottom: 1.25rem;
-            box-shadow: var(--shadow);
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        /* Card 1 - Sunny Yellow */
+        .card-purple {
+            background: linear-gradient(135deg, #b45309, #facc15, #fde047);
+            color: #1e293b;
+        }
+
+        /* Card 2 - Electric Blue */
+        .card-blue {
+            background: linear-gradient(135deg, #0d1a4d, #1e3a8a, #3b82f6);
+            color: white;
+        }
+
+        /* Card 3 - Bold Red */
+        .card-cyan {
+            background: linear-gradient(135deg, #7f1d1d, #dc2626, #ef4444);
+            color: white;
+        }
+
+        /* Animated glow shine passes over cards on hover */
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.25), transparent 50%);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-purple:hover {
+            box-shadow: 0 15px 35px rgba(250, 204, 21, 0.5);
+        }
+
+        .card-blue:hover {
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.45);
+        }
+
+        .card-cyan:hover {
+            box-shadow: 0 15px 35px rgba(239, 68, 68, 0.45);
         }
 
         .card-title {
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
-            color: var(--primary);
             display: flex;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        .card-purple .card-title {
+            color: #b45309;
+        }
+
+        .card-blue .card-title,
+        .card-cyan .card-title {
+            color: #fde047;
+        }
+
+        .card-purple .card-title svg,
+        .card-blue .card-title svg,
+        .card-cyan .card-title svg {
+            color: currentColor;
         }
 
         .card-icon {
@@ -190,12 +379,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: rgba(37, 99, 235, 0.1);
-            color: var(--primary);
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
             border-radius: 6px;
         }
 
-        /* ===== Progress Steps ===== */
+        .card-purple .card-icon {
+            background-color: rgba(255, 255, 255, 0.35);
+        }
+
+        .card-blue p,
+        .card-cyan p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+        }
+
+        /* ===== Progress Steps - Gradient Step Dots ===== */
         .progress-steps {
             display: flex;
             justify-content: space-between;
@@ -210,7 +410,7 @@
             left: 0;
             right: 0;
             height: 2px;
-            background-color: #e2e8f0;
+            background: linear-gradient(90deg, #e2e8f0, #64748b, #e2e8f0);
             z-index: 1;
         }
 
@@ -234,11 +434,19 @@
             font-size: 0.8rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
+            transition: var(--transition);
         }
 
         .step.active .step-number {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, #dc2626, #facc15);
             color: white;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+            animation: stepPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes stepPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
         }
 
         .step-label {
@@ -248,11 +456,11 @@
         }
 
         .step.active .step-label {
-            color: var(--primary);
+            color: #dc2626;
             font-weight: 500;
         }
 
-        /* ===== Button Styles ===== */
+        /* ===== CTA Button - Animated Smart Gradient ===== */
         .btn-primary {
             display: flex;
             align-items: center;
@@ -260,7 +468,9 @@
             gap: 0.5rem;
             width: 100%;
             padding: 1rem;
-            background: linear-gradient(135deg, #040e57, #5d03d5);
+            background: linear-gradient(135deg, #1e3a8a, #2563eb, #dc2626);
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite;
             color: white;
             border: none;
             border-radius: var(--radius);
@@ -268,20 +478,59 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.45);
             margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes btnGlow {
+            0%, 100% { box-shadow: 0 4px 15px rgba(37, 99, 235, 0.45); }
+            50% { box-shadow: 0 8px 28px rgba(220, 38, 38, 0.6); }
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(220, 38, 38, 0.6);
         }
 
         .btn-primary:active {
             transform: translateY(0);
         }
 
-        /* ===== Trust Badges ===== */
+        /* Ripple effect on click */
+        .btn-primary::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.6);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .btn-primary:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(0, 0); opacity: 1; }
+            100% { transform: scale(40, 40); opacity: 0; }
+        }
+
+        .btn-primary svg {
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover svg {
+            transform: translateX(4px);
+        }
+
+        /* ===== Trust Badges - Gradient Glow Circles ===== */
         .trust-badges {
             display: flex;
             justify-content: center;
@@ -299,13 +548,22 @@
         .trust-icon {
             width: 32px;
             height: 32px;
-            background-color: rgba(37, 99, 235, 0.1);
-            color: var(--primary);
+            background: linear-gradient(135deg, #facc15, #fde047);
+            color: #b45309;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(250, 204, 21, 0.35);
+            transition: var(--transition);
+        }
+
+        .trust-badge:hover .trust-icon {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.45);
         }
 
         .trust-text {
@@ -314,13 +572,35 @@
             text-align: center;
         }
 
-        /* ===== Footer Styles ===== */
+        /* ===== Footer - Deep Gradient with Shimmer ===== */
         .footer {
-            background-color: #001d82;
+            background: linear-gradient(135deg, #0d1a4d, #1e3a8a, #7f1d1d);
+            background-size: 200% 200%;
+            animation: gradientShift 12s ease infinite;
             color: white;
             padding: 1.5rem;
             text-align: center;
             margin-top: auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 -6px 20px rgba(30, 58, 138, 0.35);
+        }
+
+        /* Shimmer sweep across footer */
+        .footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+            animation: footerShimmer 5s ease-in-out infinite;
+        }
+
+        @keyframes footerShimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
         .footer-links {
@@ -328,6 +608,8 @@
             justify-content: center;
             gap: 1rem;
             margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
         }
 
         .footer-links a {
@@ -335,15 +617,34 @@
             text-decoration: none;
             font-size: 0.9rem;
             transition: var(--transition);
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, #dc2626, #facc15);
+            transition: width 0.3s ease, left 0.3s ease;
         }
 
         .footer-links a:hover {
             color: white;
         }
 
+        .footer-links a:hover::after {
+            width: 80%;
+            left: 10%;
+        }
+
         .footer p {
             font-size: 0.8rem;
-            opacity: 0.8;
+            opacity: 0.85;
+            position: relative;
+            z-index: 1;
         }
 
         /* ===== Functional Styles ===== */
@@ -420,7 +721,7 @@
         <div class="header">
             <div class="logo">
                 <div class="logo-icon">P</div>
-                <div class="logo-text">Mkopo Haraka</div>
+                <div class="logo-text">okoafedha</div>
             </div>
             <a href="#" class="help-link">
                 <span>Help</span>
@@ -435,6 +736,7 @@
 
         <!-- Hero Section -->
         <div class="hero">
+            <div class="hero-money" role="img" aria-label="Kenyan shilling notes"></div>
             <div class="offer-badge">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -444,7 +746,7 @@
                 </svg>
                 Special Offer
             </div>
-            <h1>Get Up To Ksh 100,000</h1>
+            <h1 aria-label="Get Up To Ksh 100,000"><span id="typed-headline" aria-hidden="true"></span><span class="caret" aria-hidden="true"></span></h1>
             <p>Low 7.5% interest rate for qualified borrowers</p>
         </div>
 
@@ -475,7 +777,7 @@
         </button>
 
         <!-- Feature Cards -->
-        <div class="card">
+        <div class="card card-purple">
             <div class="card-title">
                 <div class="card-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -489,7 +791,7 @@
             <p>Get pre-approved in minutes with our streamlined digital process.</p>
         </div>
 
-        <div class="card">
+        <div class="card card-blue">
             <div class="card-title">
                 <div class="card-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -503,7 +805,7 @@
             <p>Choose loan terms from 30 to 90 days that fit your budget.</p>
         </div>
 
-        <div class="card">
+        <div class="card card-cyan">
             <div class="card-title">
                 <div class="card-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -561,13 +863,47 @@
             <a href="/terms">Terms</a>
             <a href="/contact">Contact</a>
         </div>
-        <p>&copy; 2025 Mkopo Haraka. Licensed by CBK.</p>
+        <p>&copy; 2025 okoafedha. Licensed by CBK.</p>
     </footer>
 
     <!-- Functional Elements -->
     <div id="loader" class="loader" style="display: none;"></div>
 
     <script>
+        (function () {
+            var el = document.getElementById('typed-headline');
+            if (!el) return;
+            var phrases = ['Get Up To Ksh 100,000'];
+            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduceMotion) { el.textContent = phrases[0]; return; }
+            var phraseIndex = 0, charIndex = 0, deleting = false;
+            var typeSpeed = 90, deleteSpeed = 45, holdFull = 1800, holdEmpty = 400;
+            function tick() {
+                var current = phrases[phraseIndex];
+                if (!deleting) {
+                    charIndex++;
+                    el.textContent = current.slice(0, charIndex);
+                    if (charIndex === current.length) {
+                        deleting = true;
+                        setTimeout(tick, holdFull);
+                        return;
+                    }
+                    setTimeout(tick, typeSpeed + Math.random() * 60);
+                } else {
+                    charIndex--;
+                    el.textContent = current.slice(0, charIndex);
+                    if (charIndex === 0) {
+                        deleting = false;
+                        phraseIndex = (phraseIndex + 1) % phrases.length;
+                        setTimeout(tick, holdEmpty);
+                        return;
+                    }
+                    setTimeout(tick, deleteSpeed);
+                }
+            }
+            tick();
+        })();
+
         document.getElementById('startBtn').addEventListener('click', () => {
             const loader = document.getElementById('loader');
 
